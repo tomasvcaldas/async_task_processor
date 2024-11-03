@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/app # basicamente coloca o working directory dentro do container na pasta app. Permite que possa trabalhar localmente e que seja automaticamente updated no container
+      - /app/_build
+      - /app/deps # cria o build e o deps independentes do working directory, assim as dependdências e a build não estão ligadas à minha máquina mas sim à build e deps do docker container
+    environment:
+      MIX_ENV: dev
+      PORT: 4000
+    command: mix phx.server
